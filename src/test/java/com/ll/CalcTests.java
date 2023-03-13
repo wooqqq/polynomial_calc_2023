@@ -39,14 +39,12 @@ public class CalcTests {
     @Test
     @DisplayName("100 - 20 == 80")
     void t6() {
-        assertThat(Calc.run("100 - 20")).isEqualTo(80);
-    }
+        assertThat(Calc.run("100 - 20")).isEqualTo(80); }
 
     @Test
     @DisplayName("10 + 20 + 30 == 60")
     void t7() {
-        assertThat(Calc.run("10 + 20 + 30")).isEqualTo(60);
-    }
+        assertThat(Calc.run("10 + 20 + 30")).isEqualTo(60); }
 
     @Test
     @DisplayName("10 - 20 + 30 == 20")
@@ -63,8 +61,7 @@ public class CalcTests {
     @Test
     @DisplayName("10 - 10 - 10 - 10 + 10 + 10 - 10 == -10")
     void t10() {
-        assertThat(Calc.run("10 - 10 - 10 - 10 + 10 + 10 - 10")).isEqualTo(-10);
-    }
+        assertThat(Calc.run("10 - 10 - 10 - 10 + 10 + 10 - 10")).isEqualTo(-10);}
 
     @Test
     @DisplayName("10 * 10 == 100")
@@ -76,5 +73,11 @@ public class CalcTests {
     @DisplayName("10 * 10 * 10 == 1000")
     void t12() {
         assertThat(Calc.run("10 * 10 * 10")).isEqualTo(1000);
+    }
+
+    @Test
+    @DisplayName("10 + 2 * 3 == 16")
+    void t13() {
+        assertThat(Calc.run("10 + 2 * 3")).isEqualTo(16);
     }
 }
