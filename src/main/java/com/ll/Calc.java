@@ -17,28 +17,14 @@ public class Calc {
         boolean needToSplit =  exp.contains("(") || exp.contains(")");
 
         if ( needToSplit ) {
-            int bracketsCount = 0;
-            int splitPointIndex = -1;
+            int splitPointIndex = findSplitPointIndex(exp);
 
-            for ( int i = 0; i < exp.length(); i++ ) {
-                if ( exp.charAt(i) == '(' ) {
-                    bracketsCount++;
-                }
-                else if ( exp.charAt(i) == ')' ) {
-                    bracketsCount--;
-                }
-
-                if ( bracketsCount == 0 ) {
-                    splitPointIndex = i;
-                    break;
-                }
-            }
-
-            String firstExp = exp.substring(0, splitPointIndex + 1);
-            String secondExp = exp.substring(splitPointIndex + 4);
+            String firstExp = exp.substring(0, splitPointIndex);
+            String secondExp = exp.substring(splitPointIndex + 1);
 
             // 괄호 후 덧셈만 있을 때
             // return Calc.run(firstExp) + Calc.run(secondExp);
+
             /* 괄호 후 곱셈 있을 때 나의 답
             if (exp.contains("*")) {
                 return Calc.run(firstExp) * Calc.run(secondExp);
@@ -48,12 +34,11 @@ public class Calc {
             */
 
             // 강사님 답 : if ~ else 문 안쓰고 덧셈곱셈 다 가능
-            char operationCode = exp.charAt(splitPointIndex + 2);
+            char operationCode = exp.charAt(splitPointIndex);
 
             exp = Calc.run(firstExp) + " " + operationCode + " " + Calc.run(secondExp);
 
             return Calc.run(exp);
-
         }
         else if ( needToCompound ) {
             String[] bits = exp.split(" \\+ ");
@@ -91,6 +76,32 @@ public class Calc {
         }
 
         throw new RuntimeException("올바른 계산식이 아닙니다.");
+    }
+
+    private static int findSplitPointIndexBy(String exp, char findChar) {
+        int bracketsCount = 0;
+        
+        for (int i = 0; i < exp.length(); i++) {
+            char c = exp.charAt(i);
+            
+            if (c == '(') {
+                bracketsCount++;
+            } else if ( c == ')') {
+                bracketsCount--;
+            } else if ( c == findChar ) {
+                if (bracketsCount == 0) return i;
+            }
+        }
+
+        return -1;
+    }
+
+    private static int findSplitPointIndex(String exp) {
+        int index = findSplitPointIndexBy( exp, '+' );
+
+        if (index >= 0) return index;
+
+        return findSplitPointIndexBy(exp, '*');
     }
 
     private static String stripOuterBrackets(String exp) {
