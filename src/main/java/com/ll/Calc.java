@@ -37,7 +37,23 @@ public class Calc {
             String firstExp = exp.substring(0, splitPointIndex + 1);
             String secondExp = exp.substring(splitPointIndex + 4);
 
-            return Calc.run(firstExp) + Calc.run(secondExp);
+            // 괄호 후 덧셈만 있을 때
+            // return Calc.run(firstExp) + Calc.run(secondExp);
+            /* 괄호 후 곱셈 있을 때 나의 답
+            if (exp.contains("*")) {
+                return Calc.run(firstExp) * Calc.run(secondExp);
+            } else {
+                return Calc.run(firstExp) + Calc.run(secondExp);
+            }
+            */
+
+            // 강사님 답 : if ~ else 문 안쓰고 덧셈곱셈 다 가능
+            char operationCode = exp.charAt(splitPointIndex + 2);
+
+            exp = Calc.run(firstExp) + " " + operationCode + " " + Calc.run(secondExp);
+
+            return Calc.run(exp);
+
         }
         else if ( needToCompound ) {
             String[] bits = exp.split(" \\+ ");
